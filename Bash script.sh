@@ -8,7 +8,7 @@ set -ue
 Usage="Usage: \$ $(basename $0)"
 
 function main {
-  if [[ $# -lt 1 ]] || [[ $1 == '-h' ]]; then
+  if [[ $# -lt 1 ]] || [[ $1 == '-h' ]] || [[ $1 == '--help' ]]; then
     fail "$Usage"
   fi
 }
