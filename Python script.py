@@ -9,23 +9,19 @@ import logging
 import argparse
 assert sys.version_info.major >= 3, 'Python 3 required'
 
-ARG_DEFAULTS = {'log':sys.stderr, 'volume':logging.ERROR}
 DESCRIPTION = """"""
 
 
 def make_argparser():
-
   parser = argparse.ArgumentParser(description=DESCRIPTION)
-  parser.set_defaults(**ARG_DEFAULTS)
-
   parser.add_argument('positional1', metavar='dispname',
     help='')
-  parser.add_argument('-l', '--log', type=argparse.FileType('w'),
+  parser.add_argument('-l', '--log', type=argparse.FileType('w'), default=sys.stderr,
     help='Print log messages to this file instead of to stderr. Warning: Will overwrite the file.')
-  parser.add_argument('-q', '--quiet', dest='volume', action='store_const', const=logging.CRITICAL)
+  parser.add_argument('-q', '--quiet', dest='volume', action='store_const', const=logging.CRITICAL,
+    default=logging.ERROR)
   parser.add_argument('-v', '--verbose', dest='volume', action='store_const', const=logging.INFO)
   parser.add_argument('-D', '--debug', dest='volume', action='store_const', const=logging.DEBUG)
-
   return parser
 
 
