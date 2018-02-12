@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-from __future__ import division
-from __future__ import print_function
-from __future__ import absolute_import
-from __future__ import unicode_literals
 import sys
-import errno
 import logging
 import argparse
 assert sys.version_info.major >= 3, 'Python 3 required'
@@ -53,6 +48,5 @@ def fail(message):
 if __name__ == '__main__':
   try:
     sys.exit(main(sys.argv))
-  except IOError as ioe:
-    if ioe.errno != errno.EPIPE:
-      raise
+  except BrokenPipeError:
+    pass
