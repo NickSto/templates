@@ -13,10 +13,11 @@ def make_argparser():
     help='')
   parser.add_argument('-l', '--log', type=argparse.FileType('w'), default=sys.stderr,
     help='Print log messages to this file instead of to stderr. Warning: Will overwrite the file.')
-  parser.add_argument('-q', '--quiet', dest='volume', action='store_const', const=logging.CRITICAL,
+  volume = parser.add_mutually_exclusive_group()
+  volume.add_argument('-q', '--quiet', dest='volume', action='store_const', const=logging.CRITICAL,
     default=logging.WARNING)
-  parser.add_argument('-v', '--verbose', dest='volume', action='store_const', const=logging.INFO)
-  parser.add_argument('-D', '--debug', dest='volume', action='store_const', const=logging.DEBUG)
+  volume.add_argument('-v', '--verbose', dest='volume', action='store_const', const=logging.INFO)
+  volume.add_argument('-D', '--debug', dest='volume', action='store_const', const=logging.DEBUG)
   return parser
 
 
