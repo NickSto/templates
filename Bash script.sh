@@ -5,10 +5,24 @@ if [ "x$BASH" = x ] || [ ! "$BASH_VERSINFO" ] || [ "$BASH_VERSINFO" -lt 4 ]; the
 fi
 set -ue
 
-Usage="Usage: \$ $(basename "$0")"
+Usage="Usage: \$ $(basename "$0") [options] required [pos2]"
 
 function main {
-  if [[ "$#" -lt 1 ]] || [[ "$1" == '-h' ]] || [[ "$1" == '--help' ]]; then
+
+  # Get arguments.
+  flag=
+  num=0
+  while getopts ":fn:h" opt; do
+    case "$opt" in
+      f) flag="true";;
+      n) num="$OPTARG";;
+      h) fail "$Usage";;
+    esac
+  done
+  required="${@:$OPTIND:1}"
+  pos2="${@:$OPTIND+1:1}"
+
+  if ! [[ "$required" ]]; then
     fail "$Usage"
   fi
 }
