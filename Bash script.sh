@@ -12,11 +12,11 @@ function main {
   # Get arguments.
   flag=
   num=0
-  while getopts ":fn:h" opt; do
+  while getopts "fn:h" opt; do
     case "$opt" in
       f) flag="true";;
       n) num="$OPTARG";;
-      h) fail "$Usage";;
+      [h?]) fail "$Usage";;
     esac
   done
   required="${@:$OPTIND:1}"
