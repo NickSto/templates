@@ -4,6 +4,7 @@ if [ "x$BASH" = x ] || [ ! "$BASH_VERSINFO" ] || [ "$BASH_VERSINFO" -lt 4 ]; the
   exit 1
 fi
 set -ue
+unset CDPATH
 
 Usage="Usage: \$ $(basename "$0") [options] required [pos2]"
 
