@@ -8,12 +8,16 @@ DESCRIPTION = """"""
 
 
 def make_argparser():
-  parser = argparse.ArgumentParser(description=DESCRIPTION)
-  parser.add_argument('positional1', metavar='dispname',
+  parser = argparse.ArgumentParser(add_help=False, description=DESCRIPTION)
+  options = parser.add_argument_group('Options')
+  options.add_argument('positional1', metavar='dispname',
     help='')
-  parser.add_argument('-l', '--log', type=argparse.FileType('w'), default=sys.stderr,
+  options.add_argument('-h', '--help', action='help',
+    help='Print this argument help text and exit.')
+  logs = parser.add_argument_group('Logging')
+  logs.add_argument('-l', '--log', type=argparse.FileType('w'), default=sys.stderr,
     help='Print log messages to this file instead of to stderr. Warning: Will overwrite the file.')
-  volume = parser.add_mutually_exclusive_group()
+  volume = logs.add_mutually_exclusive_group()
   volume.add_argument('-q', '--quiet', dest='volume', action='store_const', const=logging.CRITICAL,
     default=logging.WARNING)
   volume.add_argument('-v', '--verbose', dest='volume', action='store_const', const=logging.INFO)
@@ -30,11 +34,11 @@ def main(argv):
 
 
 def fail(message):
-  logging.critical(message)
+  logging.critical('Error: '+str(message))
   if __name__ == '__main__':
     sys.exit(1)
   else:
-    raise Exception('Unrecoverable error')
+    raise Exception(message)
 
 
 if __name__ == '__main__':
