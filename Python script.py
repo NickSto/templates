@@ -2,7 +2,6 @@
 import argparse
 import logging
 import sys
-assert sys.version_info.major >= 3, 'Python 3 required'
 
 DESCRIPTION = """"""
 
@@ -34,7 +33,7 @@ def main(argv):
 
 
 def fail(message):
-  logging.critical('Error: '+str(message))
+  logging.critical(f'Error: {message}')
   if __name__ == '__main__':
     sys.exit(1)
   else:
