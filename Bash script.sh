@@ -17,19 +17,26 @@ function main {
     case "$opt" in
       f) flag="true";;
       n) num="$OPTARG";;
-      [h?]) fail "$Usage";;
+      [h?]) fail -E "$Usage";;
     esac
   done
   required="${@:$OPTIND:1}"
   pos2="${@:$OPTIND+1:1}"
 
   if ! [[ "$required" ]]; then
-    fail "$Usage"
+    fail -E "$Usage"
   fi
 }
 
 function fail {
-  echo "$@" >&2
+  opt="$1"
+  if [[ "$opt" == '-E' ]]; then
+    prefix=
+    shift
+  else
+    prefix="Error: "
+  fi
+  echo "$prefix$@" >&2
   exit 1
 }
 
