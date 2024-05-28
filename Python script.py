@@ -32,12 +32,14 @@ def main(argv):
     logging.basicConfig(stream=args.log, level=args.volume, format='%(message)s')
 
 
-def fail(message):
-    logging.critical(f'Error: {message}')
+def fail(error, code=1):
     if __name__ == '__main__':
-        sys.exit(1)
+        logging.critical(f'Error: {error}')
+        sys.exit(code)
+    elif isinstance(error, BaseException):
+        raise error
     else:
-        raise Exception(message)
+        raise Exception(error)
 
 
 if __name__ == '__main__':
