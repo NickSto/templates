@@ -2,6 +2,7 @@
 import argparse
 import logging
 import sys
+from typing import Union, Optional
 
 DESCRIPTION = """"""
 
@@ -24,15 +25,17 @@ def make_argparser():
     return parser
 
 
-def main(argv):
+def main(*argv: str) -> Optional[int]:
 
     parser = make_argparser()
     args = parser.parse_args(argv[1:])
 
     logging.basicConfig(stream=args.log, level=args.volume, format='%(message)s')
 
+    return None
 
-def fail(error, code=1):
+
+def fail(error: Union[str,BaseException], code: int = 1):
     if __name__ == '__main__':
         logging.critical(f'Error: {error}')
         sys.exit(code)
@@ -44,6 +47,6 @@ def fail(error, code=1):
 
 if __name__ == '__main__':
     try:
-        sys.exit(main(sys.argv))
+        sys.exit(main(*sys.argv))
     except BrokenPipeError:
         pass
