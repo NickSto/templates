@@ -2,7 +2,7 @@
 import argparse
 import logging
 import sys
-from typing import Union, Optional
+from typing import Union, Optional, NoReturn
 
 DESCRIPTION = """"""
 
@@ -35,14 +35,14 @@ def main(*argv: str) -> Optional[int]:
     return None
 
 
-def fail(error: Union[str,BaseException], code: int = 1):
+def fail(error: Union[str,BaseException], code: int = 1) -> NoReturn:
     if __name__ == '__main__':
         logging.critical(f'Error: {error}')
         sys.exit(code)
     elif isinstance(error, BaseException):
         raise error
     else:
-        raise Exception(error)
+        raise RuntimeError(error)
 
 
 if __name__ == '__main__':
